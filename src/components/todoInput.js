@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 class TodoInput extends React.Component {
@@ -25,18 +26,24 @@ class TodoInput extends React.Component {
   }
 
   render () {
+    let { className, checkAll } = this.props
     return (
-      <div className={this.props.className}>
+      <div className={className}>
         <span className="check"
-              onClick={this.props.selectAll}></span>
+              onClick={checkAll}></span>
         <input className="input"
-             placeholder="What need to be done?"
-             value={this.state.value}
-             onChange={this.handleChange.bind(this)}
-             onKeyDown={this.handleKeyDown.bind(this)}/>
+               placeholder="What need to be done?"
+               value={this.state.value}
+               onChange={this.handleChange.bind(this)}
+               onKeyDown={this.handleKeyDown.bind(this)}/>
       </div>
     )
   }
+}
+
+TodoInput.propTypes = {
+  check: PropTypes.bool,
+  checkAll: PropTypes.func
 }
 
 TodoInput = styled(TodoInput)`
@@ -46,7 +53,7 @@ TodoInput = styled(TodoInput)`
   .check {
     width: 60px;
     height: 100%;
-    color: ${props => (props.checkAll ? '#777' : '#ddd')};
+    color: ${props => (props.check ? '#777' : '#ddd')};
   }
 
   .check::before {

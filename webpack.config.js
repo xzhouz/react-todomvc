@@ -10,8 +10,15 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        use: 'babel-loader'
+        use: 'babel-loader',
+        exclude: /node_modules/
       }
     ]
+  },
+  devtool: 'eval-source-map',
+  devServer: {
+    port: 9000,
+    open: true,
+    overlay: true
   }
 }

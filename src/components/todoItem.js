@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 let Tick = styled.span`
@@ -83,6 +84,12 @@ class TodoItem extends React.Component {
       </div>
     )
   }
+}
+
+TodoItem.propTypes = {
+  todo: PropTypes.object,
+  delete: PropTypes.func,
+  toggle: PropTypes.func
 }
 
 TodoItem = styled(TodoItem)`

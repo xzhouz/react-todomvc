@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack -w & google-chrome dist/index.html"
+    "start": "webpack-dev-server --content-base dist/"
   },
   "keywords": [],
   "author": "",
@@ -14,7 +14,8 @@
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
-    "webpack": "^3.10.0"
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.7"
   },
   "dependencies": {
     "react": "^16.2.0",

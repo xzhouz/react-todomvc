@@ -26,12 +26,12 @@ class App extends React.Component {
       todoList[index].completed = !todoList[index].completed
       this.setState({todoList}, () => {
         this.setState({
-          checkAll: this.isSelectedAll()
+          checkAll: this.isCheckAll()
         })
       })
     }
   }
-  isSelectedAll () {
+  isCheckAll () {
     let todoList = this.state.todoList
     return todoList.length > 0 && todoList.every(item => item.completed)
   }
@@ -41,7 +41,7 @@ class App extends React.Component {
       todoList.splice(index, 1)
       this.setState({todoList}, () => {
         this.setState({
-          checkAll: this.isSelectedAll()
+          checkAll: this.isCheckAll()
         })
       })
     }
@@ -56,7 +56,7 @@ class App extends React.Component {
       todoList: this.state.todoList.filter((item) => !item.completed)
     })
   }
-  selectAll () {
+  checkAll () {
     if (this.state.todoList.length === 0) return
     let completed = !this.state.checkAll
     this.setState({
@@ -84,8 +84,8 @@ class App extends React.Component {
     return (
       <div className="app">
         <Header submit={this.submit.bind(this)}
-                selectAll={this.selectAll.bind(this)}
-                checkAll={this.state.checkAll}></Header>
+                checkAll={this.checkAll.bind(this)}
+                check={this.state.checkAll}></Header>
         <TodoList todoList={todoList}
                   toggle={this.toggle.bind(this)}
                   delete={this.delete.bind(this)}/>

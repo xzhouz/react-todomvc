@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import FilterButton from './filterButton'
@@ -45,6 +46,12 @@ class Footer extends React.Component {
       </footer>
     )
   }
+}
+
+Footer.propTypes = {
+  size: PropTypes.number,
+  showClear: PropTypes.bool,
+  clear: PropTypes.func
 }
 
 Footer = styled(Footer)`

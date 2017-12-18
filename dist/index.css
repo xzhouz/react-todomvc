@@ -1,0 +1,15 @@
+* {
+  margin: 0;
+}
+
+button {
+  border: 1px solid transparent;
+}
+
+button:hover {
+  border: 1px solid #eee;
+}
+
+button:focus {
+  border: 1px solid #faa;
+}
