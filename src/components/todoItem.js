@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
 
 let Tick = styled.span`
@@ -79,7 +80,7 @@ class TodoItem extends React.Component {
     return (
       <div className={className}>
         <Tick completed={todo.completed} onClick={this.handleToggle.bind(this)}/>
-        {todo.action}
+        {todo.text}
         <Cross className="cross" onClick={this.handleDelete.bind(this)}/>
       </div>
     )
@@ -91,6 +92,15 @@ TodoItem.propTypes = {
   delete: PropTypes.func,
   toggle: PropTypes.func
 }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    toggle: (index) => dispatch({type: 'TOGGLE_TODO', index}),
+    delete: (index) => dispatch({type: 'DELETE_TODO', index})
+  }
+}
+
+TodoItem = connect(undefined, mapDispatchToProps)(TodoItem)
 
 TodoItem = styled(TodoItem)`
   position: relative;

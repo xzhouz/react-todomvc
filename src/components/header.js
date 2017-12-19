@@ -15,13 +15,11 @@ class Header extends React.Component {
     this.props.submit(value)
   }
   render () {
-    let { className, checkAll, check } = this.props
+    let { className } = this.props
     return (
       <div className={className}>
         <Title>todos</Title>
-        <TodoInput checkAll={this.props.checkAll}
-                   submit={this.submit.bind(this)}
-                   check={this.props.check}/>
+        <TodoInput/>
       </div>
     )
   }

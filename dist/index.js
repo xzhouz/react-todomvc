@@ -13139,7 +13139,8 @@ var Footer = function (_React$Component) {
 Footer.propTypes = {
   size: _propTypes2.default.number,
   showClear: _propTypes2.default.bool,
-  clear: _propTypes2.default.func
+  clear: _propTypes2.default.func,
+  filter: _propTypes2.default.func
 };
 
 Footer = (0, _styledComponents2.default)(Footer)(_templateObject3);

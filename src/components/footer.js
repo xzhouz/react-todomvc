@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
 
 import FilterButton from './filterButton'
@@ -19,17 +20,8 @@ let ClearButton = styled.span`
 `
 
 class Footer extends React.Component {
-  filterAll () {
-    this.props.filter(0)
-  }
-  filterActive () {
-    this.props.filter(2)
-  }
-  filterCompleted () {
-    this.props.filter(1)
-  }
   render () {
-    let { size, className, showClear, clear } = this.props
+    let { size, className, showClear, clear, filter } = this.props
     let style = {}
     if (!showClear) {
       style.opacity = '0'
@@ -38,9 +30,9 @@ class Footer extends React.Component {
       <footer className={className}>
         <span className="size">{size} items left</span>
         <Filter>
-          <FilterButton handleClick={this.filterAll.bind(this)}>All</FilterButton>
-          <FilterButton handleClick={this.filterActive.bind(this)}>Active</FilterButton>
-          <FilterButton handleClick={this.filterCompleted.bind(this)}>Completed</FilterButton>
+          <FilterButton handleClick={() => filter('ALL')}>All</FilterButton>
+          <FilterButton handleClick={() => filter('ACTIVE')}>Active</FilterButton>
+          <FilterButton handleClick={() => filter('COMPLETED')}>Completed</FilterButton>
         </Filter>
         <ClearButton onClick={clear} className="clear" style={style}>Clear completed</ClearButton>
       </footer>
@@ -48,10 +40,32 @@ class Footer extends React.Component {
   }
 }
 
+function mapStateToProps (state) {
+  let todos = state.todos
+  return {
+    size: todos.length,
+    showClear: todos.some((item) => item.completed)
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    filter (type) {
+      dispatch({type})
+    },
+    clear () {
+      dispatch({type: 'CLEAR_TODO'})
+    }
+  }
+}
+
+Footer = connect(mapStateToProps, mapDispatchToProps)(Footer)
+
 Footer.propTypes = {
   size: PropTypes.number,
   showClear: PropTypes.bool,
-  clear: PropTypes.func
+  clear: PropTypes.func,
+  filter: PropTypes.func
 }
 
 Footer = styled(Footer)`

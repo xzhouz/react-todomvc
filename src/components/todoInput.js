@@ -1,6 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
+
+let Check = styled.span`
+  width: 60px;
+  height: 100%;
+  color: ${props => (props.isCheckAll ? '#777' : '#ddd')};
+
+  &::before {
+    content: '>';
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    font-size: 30px;
+    font-weight: 900;
+    transform: rotate(90deg) scale(0.7, 1.5);
+  }
+`
 
 class TodoInput extends React.Component {
   constructor (props) {
@@ -26,11 +43,12 @@ class TodoInput extends React.Component {
   }
 
   render () {
-    let { className, checkAll } = this.props
+    let { className, checkAllOrUncheck, isCheckAll } = this.props
     return (
       <div className={className}>
-        <span className="check"
-              onClick={checkAll}></span>
+        <Check className="check"
+               onClick={() => checkAllOrUncheck(isCheckAll)}
+               isCheckAll={isCheckAll}/>
         <input className="input"
                placeholder="What need to be done?"
                value={this.state.value}
@@ -43,27 +61,39 @@ class TodoInput extends React.Component {
 
 TodoInput.propTypes = {
   check: PropTypes.bool,
-  checkAll: PropTypes.func
+  checkAll: PropTypes.func,
+  submit: PropTypes.func
 }
+
+function mapDispatchToProps (dispatch) {
+  return {
+    submit (text) {
+      dispatch({type: 'ADD_TODO', text})
+    },
+    checkAllOrUncheck (isCheckAll) {
+      if (isCheckAll) {
+        dispatch({type: 'UNCHECK_ALL_TODO'})
+      } else {
+        dispatch({type: 'CHECK_ALL_TODO'})
+      }
+    }
+  }
+}
+
+function mapStateToProps (state) {
+  let todos = state.todos
+  return {
+    isCheckAll: todos.length > 0 && todos.every(item => item.completed)
+  }
+}
+
+TodoInput = connect(mapStateToProps, mapDispatchToProps)(TodoInput)
 
 TodoInput = styled(TodoInput)`
   position: relative;
   box-shadow: 0 -2px 1px rgba(0, 0, 0, 0.03) inset;
 
   .check {
-    width: 60px;
-    height: 100%;
-    color: ${props => (props.check ? '#777' : '#ddd')};
-  }
-
-  .check::before {
-    content: '>';
-    position: absolute;
-    left: 15px;
-    top: 15px;
-    font-size: 30px;
-    font-weight: 900;
-    transform: rotate(90deg) scale(0.7, 1.5);
   }
 
   .input {

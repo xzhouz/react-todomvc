@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
   entry: './src/index.js',
@@ -19,6 +20,10 @@ module.exports = {
   devServer: {
     port: 9000,
     open: true,
-    overlay: true
-  }
+    overlay: true,
+    hot: true
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ]
 }
